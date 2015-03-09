@@ -30,12 +30,20 @@ namespace FruitShop
 
         private int ApplyReductions(int total)
         {
-            return total - Compute2CerisesGot20CentsReduction(total);
+            return total 
+                - Compute2CerisesGot20CentsReduction(total)
+                - Compute2BananesGot1FreeReduction(total)
+                ;
         }
 
         private int Compute2CerisesGot20CentsReduction(int total)
         {
-            return (_articles.Count(a => a == Articles.Cerises) / 2) * 20;
+            return (_articles.Count(a => a == Articles.Cerises) / 2) * 30;
+        }
+
+        private int Compute2BananesGot1FreeReduction(int total)
+        {
+            return (_articles.Count(a => a == Articles.Bananes) / 2) * _costs[Articles.Bananes];
         }
     }
 
