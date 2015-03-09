@@ -10,6 +10,8 @@ namespace FruitShop
         private readonly Dictionary<Articles, int> _costs = new Dictionary<Articles, int>()
         {
             {Articles.Pommes, 100},
+            {Articles.Apples, 100},
+            {Articles.Mele, 100},
             {Articles.Cerises, 75},
             {Articles.Bananes, 150},
         };
@@ -38,7 +40,7 @@ namespace FruitShop
 
         private int Compute2CerisesGot20CentsReduction(int total)
         {
-            return (_articles.Count(a => a == Articles.Cerises) / 2) * 30;
+            return (_articles.Count(a => a == Articles.Cerises) / 2) * 20;
         }
 
         private int Compute2BananesGot1FreeReduction(int total)
@@ -52,5 +54,7 @@ namespace FruitShop
         Pommes,
         Cerises,
         Bananes,
+        Apples,
+        Mele,
     }
 }
