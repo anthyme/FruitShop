@@ -20,9 +20,19 @@ namespace FruitShop
 
         public string Add(string parameter)
         {
-            var article = (Articles)Enum.Parse(typeof(Articles), parameter);
-            _articles.Add(article);
+            AddArticlesFromParameter(parameter);
             return ApplyReductions(ComputeRawTotal()).ToString();
+        }
+
+        private void AddArticlesFromParameter(string parameter)
+        {
+            parameter.Split(',').Select(p=>p.Trim()).Select(ConvertToArticle)
+                .ToList().ForEach(_articles.Add);
+        }
+
+        private static Articles ConvertToArticle(string parameter)
+        {
+            return (Articles) Enum.Parse(typeof (Articles), parameter);
         }
 
         private int ComputeRawTotal()
@@ -33,19 +43,41 @@ namespace FruitShop
         private int ApplyReductions(int total)
         {
             return total 
-                - Compute2CerisesGot20CentsReduction(total)
-                - Compute2BananesGot1FreeReduction(total)
+                - Compute2CerisesGot20CentsReduction()
+                - Compute2BananesGot1FreeReduction()
+                - Compute3ApplesFor200Reduction()
+                - Compute2MeleFor100Reduction()
                 ;
         }
 
-        private int Compute2CerisesGot20CentsReduction(int total)
+        private int Compute2MeleFor100Reduction()
         {
-            return (_articles.Count(a => a == Articles.Cerises) / 2) * 20;
+            return (Count(Articles.Mele) / 2) * (2 * CostOf(Articles.Mele) - 100);
         }
 
-        private int Compute2BananesGot1FreeReduction(int total)
+        private int Compute3ApplesFor200Reduction()
         {
-            return (_articles.Count(a => a == Articles.Bananes) / 2) * _costs[Articles.Bananes];
+            return (Count(Articles.Apples) / 3) * (3 * CostOf(Articles.Apples) - 200);
+        }
+
+        private int Compute2CerisesGot20CentsReduction()
+        {
+            return (Count(Articles.Cerises) / 2) * 20;
+        }
+
+        private int Compute2BananesGot1FreeReduction()
+        {
+            return (Count(Articles.Bananes) / 2) * CostOf(Articles.Bananes);
+        }
+
+        private int Count(Articles article)
+        {
+            return _articles.Count(a => a == article);
+        }
+
+        private int CostOf(Articles article)
+        {
+            return _costs[article];
         }
     }
 
