@@ -13,23 +13,25 @@ namespace FruitShop.Tests
         }
 
         [Test]
-        public void Iteration1Test()
+        public void Iteration2Test()
         {
             var checkout = new Checkout();
             Test(checkout, "Pommes", 100);
             Test(checkout, "Cerises", 175);
-            Test(checkout, "Cerises", 250);
+            Test(checkout, "Cerises", 230);
         }
 
         [Test]
-        public void Iteration1Verifications()
+        public void Iteration2Verifications()
         {
             var checkout = new Checkout();
             Test(checkout, "Cerises", 75);
             Test(checkout, "Pommes", 175);
-            Test(checkout, "Cerises", 250);
-            Test(checkout, "Bananes", 400);
-            Test(checkout, "Pommes", 500);
+            Test(checkout, "Cerises", 230);
+            Test(checkout, "Bananes", 380);
+            Test(checkout, "Cerises", 455);
+            Test(checkout, "Cerises", 510);
+            Test(checkout, "Pommes", 610);
         }
     }
 }
