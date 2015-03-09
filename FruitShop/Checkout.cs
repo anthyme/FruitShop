@@ -26,13 +26,13 @@ namespace FruitShop
 
         private void AddArticlesFromParameter(string parameter)
         {
-            parameter.Split(',').Select(p=>p.Trim()).Select(ConvertToArticle)
+            parameter.Split(',').Select(p => p.Trim()).Select(ConvertToArticle)
                 .ToList().ForEach(_articles.Add);
         }
 
         private static Articles ConvertToArticle(string parameter)
         {
-            return (Articles) Enum.Parse(typeof (Articles), parameter);
+            return (Articles)Enum.Parse(typeof(Articles), parameter);
         }
 
         private int ComputeRawTotal()
@@ -42,12 +42,27 @@ namespace FruitShop
 
         private int ApplyReductions(int total)
         {
-            return total 
+            return total
                 - Compute2CerisesGot20CentsReduction()
                 - Compute2BananesGot1FreeReduction()
                 - Compute3ApplesFor200Reduction()
                 - Compute2MeleFor100Reduction()
+                - Compute4PommesGot100Reduction()
+                - Compute5FruitsGot200Reduction()
                 ;
+        }
+
+        private int Compute5FruitsGot200Reduction()
+        {
+            return (_articles.Count / 5) * 200;
+        }
+
+        private int Compute4PommesGot100Reduction()
+        {
+            return ((
+                Count(Articles.Apples) +
+                Count(Articles.Mele) +
+                Count(Articles.Pommes)) / 4) * 100;
         }
 
         private int Compute2MeleFor100Reduction()
